@@ -1,0 +1,2 @@
+import React from 'react'; import { createRoot } from 'react-dom/client'; import { BrowserRouter } from 'react-router-dom'; import App from './App'; import {CartProvider} from './context/CartContext'; import {WishlistProvider} from './context/WishlistContext'; import {ThemeProvider} from './context/ThemeContext'; import './styles/global.css';
+createRoot(document.getElementById('root')).render(<React.StrictMode><BrowserRouter><ThemeProvider><CartProvider><WishlistProvider><App/></WishlistProvider></CartProvider></ThemeProvider></BrowserRouter></React.StrictMode>);

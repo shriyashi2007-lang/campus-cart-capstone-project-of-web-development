@@ -1,0 +1,2 @@
+import {motion} from 'framer-motion';import {Sun,Moon} from 'lucide-react';import {useTheme} from '../../context/ThemeContext';
+export default function ThemeToggle(){const{isDark,toggleTheme}=useTheme();return <motion.button className="theme-toggle" aria-label={isDark?'Switch to light mode':'Switch to dark mode'} onClick={toggleTheme} whileHover={{scale:1.05}} whileTap={{scale:.95}}><motion.span className="theme-knob" animate={{x:isDark?26:0,rotate:isDark?360:0}} transition={{duration:.4}}>{isDark?<Moon size={16}/>:<Sun size={16}/>}</motion.span></motion.button>}

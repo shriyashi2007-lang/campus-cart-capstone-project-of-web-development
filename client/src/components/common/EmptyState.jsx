@@ -1,0 +1,1 @@
+export default function EmptyState({title='Nothing here yet',text='Find something useful for campus life.',action='Browse Marketplace',href='/marketplace'}){return <div className="empty-state"><div style={{fontSize:'3rem'}}>🛒</div><h2 className="section-title">{title}</h2><p>{text}</p><a className="btn btn-primary" href={href}>{action}</a></div>}

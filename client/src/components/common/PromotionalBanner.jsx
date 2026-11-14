@@ -1,0 +1,1 @@
+export default function PromotionalBanner(){return <div className="promo-banner"><span>✦ Hostel move-in week</span><strong>Up to 30% off essentials</strong><small>Demo offer · student life, made easier</small></div>}

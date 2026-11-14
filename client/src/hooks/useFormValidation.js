@@ -1,0 +1,3 @@
+import { useState } from 'react';
+export function passwordRules(value=''){ return { length:value.length>=8, upper:/[A-Z]/.test(value), number:/\d/.test(value), symbol:/[^A-Za-z0-9]/.test(value) }; }
+export function useFormValidation(initial, validate){ const [values,setValues]=useState(initial); const [touched,setTouched]=useState({}); const [submitted,setSubmitted]=useState(false); const errors=validate(values); const update=(name,value)=>setValues(v=>({...v,[name]:value})); const blur=name=>setTouched(v=>({...v,[name]:true})); return {values,update,blur,errors,touched,submitted,setSubmitted,show:(name)=>touched[name]||submitted}; }
