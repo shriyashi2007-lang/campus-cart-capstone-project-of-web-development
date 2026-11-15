@@ -60,3 +60,7 @@ The public floating menu links to Home, Marketplace, Categories, About, Login, a
 
 `HeroShowcase` is permanent landing-page infrastructure. Its five mock category tiles live in `client/src/data/heroTiles.js`; the component supports timed cycling, controls, keyboard focus, theme tokens, and reduced-motion behavior. Keep it in place through Days 3–6 while backend work changes only data sources.
 
+## Assets
+
+Cart photo: confirm the license before publishing. Replace with a licensed or original illustration if required.
+
