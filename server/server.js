@@ -4,17 +4,26 @@ import path from 'node:path';
 import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
-import { connectDB } from './config/db.js';
+import { connectDB, databaseStatus } from './config/db.js';
+import authRoutes from './routes/authRoutes.js';
+import productRoutes from './routes/productRoutes.js';
+import cartRoutes from './routes/cartRoutes.js';
+import wishlistRoutes from './routes/wishlistRoutes.js';
 
 const envPath = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '.env');
 dotenv.config({ path: envPath });
 
 const app = express();
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '100kb' }));
+app.use('/api/auth', authRoutes);
+app.use('/api/products', productRoutes);
+app.use('/api/cart', cartRoutes);
+app.use('/api/wishlist', wishlistRoutes);
 
 app.get('/api/health', (_req, res) => {
-  res.json({ status: 'ok', service: 'campus-cart-api' });
+  const database = databaseStatus();
+  res.status(database === 'connected' ? 200 : 503).json({ status: database === 'connected' ? 'ok' : 'error', service: 'campus-cart-api', database });
 });
 
 const port = process.env.PORT || 5000;

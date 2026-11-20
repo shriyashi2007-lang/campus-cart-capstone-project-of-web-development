@@ -1,0 +1,1 @@
+import {Router} from 'express'; import {auth} from '../middleware/authMiddleware.js'; import {getWishlist,addWishlist,removeWishlist} from '../controllers/wishlistController.js'; const r=Router(); r.use(auth); r.get('/',getWishlist); r.post('/add',addWishlist); r.delete('/remove/:productId',removeWishlist); export default r;

@@ -1,0 +1,6 @@
+import jwt from 'jsonwebtoken';
+import User from '../models/User.js';
+const safe = user => user.toJSON ? user.toJSON() : user;
+export async function register(req, res) { const { name, email, password, phone } = req.body; if (!name || !email || !password) return res.status(400).json({ success: false, message: 'Name, email and password are required.' }); if (await User.exists({ email: email.toLowerCase() })) return res.status(409).json({ success: false, message: 'An account already exists for that email.' }); const user = await User.create({ name, email, password, phone }); const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN || '7d' }); res.status(201).json({ success: true, data: { token, user: safe(user) } }); }
+export async function login(req, res) { const { email, password } = req.body; const user = await User.findOne({ email: String(email || '').toLowerCase() }).select('+password'); if (!user || !(await user.comparePassword(password || ''))) return res.status(401).json({ success: false, message: 'Invalid email or password.' }); const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN || '7d' }); res.json({ success: true, data: { token, user: safe(user) } }); }
+export async function me(req, res) { res.json({ success: true, data: { user: req.user } }); }
