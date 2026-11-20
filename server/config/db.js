@@ -2,13 +2,14 @@ import mongoose from 'mongoose';
 
 export async function connectDB() {
   if (!process.env.MONGO_URI) {
-    console.warn('MONGO_URI not set; starting without a database connection.');
-    return;
+    throw new Error('MONGO_URI is not configured. Add it to server/.env.');
   }
   try {
-    await mongoose.connect(process.env.MONGO_URI);
-    console.log('MongoDB connected.');
+    await mongoose.connect(process.env.MONGO_URI, { serverSelectionTimeoutMS: 15000 });
+    console.log('MongoDB connected successfully.');
+    return mongoose.connection;
   } catch (error) {
-    console.warn(`MongoDB unavailable; continuing without it: ${error.message}`);
+    console.error(`MongoDB connection failed: ${error.name}: ${error.message}`);
+    throw error;
   }
 }
