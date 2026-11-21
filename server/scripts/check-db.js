@@ -17,7 +17,10 @@ try { host = new URL(uri).hostname; } catch { console.error('MongoDB check faile
 
 try {
   await mongoose.connect(uri, { serverSelectionTimeoutMS: 10000 });
+  const databaseName = mongoose.connection.name;
+  const productCount = await mongoose.connection.db.collection('products').countDocuments();
   console.log(`MongoDB connection succeeded: ${host}`);
+  console.log(`Database=${databaseName} Collection=products Documents=${productCount}`);
   await mongoose.disconnect();
 } catch (error) {
   console.error(`MongoDB connection failed: ${error.name}; host=${host}`);

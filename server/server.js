@@ -21,6 +21,11 @@ app.use('/api/products', productRoutes);
 app.use('/api/cart', cartRoutes);
 app.use('/api/wishlist', wishlistRoutes);
 
+app.use((req, res, next) => {
+  if (req.path === '/api/health' || databaseStatus() === 'connected') return next();
+  return res.status(503).json({ success: false, message: 'Database is not ready.' });
+});
+
 app.get('/api/health', (_req, res) => {
   const database = databaseStatus();
   res.status(database === 'connected' ? 200 : 503).json({ status: database === 'connected' ? 'ok' : 'error', service: 'campus-cart-api', database });
